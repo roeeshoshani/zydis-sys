@@ -6,12 +6,9 @@ fn build_zydis() {
     config
         .define("ZYDIS_BUILD_EXAMPLES", "OFF")
         .define("ZYDIS_BUILD_TOOLS", "OFF")
-        .define("ZYDIS_FEATURE_DECODER", "ON");
-
-    config.define("ZYDIS_MINIMAL_MODE", "OFF");
-    config.define("ZYDIS_FEATURE_FORMATTER", "ON");
-    config.define("ZYDIS_FEATURE_ENCODER", "ON");
-    config.define("ZYAN_NO_LIBC", "OFF");
+        .define("ZYDIS_BUILD_DOXYGEN", "OFF")
+        .define("ZYDIS_BUILD_TESTS", "OFF")
+        .define("ZYAN_NO_LIBC", "ON");
 
     let dst = config.build();
 
@@ -39,8 +36,10 @@ fn generate_bindings() {
     let bindings = bindgen::Builder::default()
         .clang_arg("-Izydis/include/")
         .clang_arg("-Izydis/dependencies/zycore/include/")
+        .clang_arg("-DZYAN_NO_LIBC")
         .header("zydis.h")
         .parse_callbacks(Box::new(bindgen::CargoCallbacks::new()))
+        .use_core()
         .generate()
         .unwrap();
     let out_dir = std::env::var("OUT_DIR").unwrap();
