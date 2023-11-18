@@ -1,4 +1,4 @@
-//! low level rust bindings for the zydis crate for encoding/decoding and messing with x86 instructions.
+//! low level rust bindings for the zydis library for encoding/decoding and messing with x86 instructions.
 //! for higher level bindings, check out the `rydis` crate.
 
 #![allow(non_upper_case_globals)]
