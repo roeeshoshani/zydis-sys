@@ -37,6 +37,15 @@ fn generate_bindings() {
         .clang_arg("-Izydis/include/")
         .clang_arg("-Izydis/dependencies/zycore/include/")
         .clang_arg("-DZYAN_NO_LIBC")
+        .default_enum_style(bindgen::EnumVariation::NewType {
+            is_bitfield: false,
+            is_global: false,
+        })
+        .derive_debug(true)
+        .derive_default(true)
+        .derive_eq(true)
+        .impl_debug(true)
+        .impl_partialeq(true)
         .header("zydis.h")
         .parse_callbacks(Box::new(bindgen::CargoCallbacks::new()))
         .use_core()
