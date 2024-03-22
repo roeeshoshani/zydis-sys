@@ -10,6 +10,10 @@ fn build_zydis() {
         .define("ZYDIS_BUILD_TESTS", "OFF")
         .define("ZYAN_NO_LIBC", "ON");
 
+    if cfg!(target_os = "windows") {
+        config.cflag("/GS-");
+    }
+
     let dst = config.build();
 
     let target = env::var("TARGET").unwrap_or("(unknown)".to_string());
